@@ -3,134 +3,181 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Sesuatu Buat Kamu</title>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&family=Dancing+Script:wght@700&display=swap" rel="stylesheet">
+    <title>Special Gift</title>
+    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;600&family=Dancing+Script:wght@700&display=swap" rel="stylesheet">
     <style>
-        /* --- CSS DASAR --- */
-        body, html {
-            height: 100%; margin: 0;
-            font-family: 'Poppins', sans-serif;
+        * {
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: #0f0c29;
+            background: linear-gradient(to bottom, #24243e, #302b63, #0f0c29);
+            font-family: 'Quicksand', sans-serif;
             overflow: hidden;
-            background: linear-gradient(135deg, #fed0da 0%, #a3d9f9 100%);
-            display: flex; justify-content: center; align-items: center;
+            color: white;
         }
 
-        /* --- ANIMASI PARTIKEL HATI (Banyak Variasi) --- */
-        .hearts { position: absolute; width: 100%; height: 100%; top: 0; left: 0; z-index: 0; }
-        .heart {
-            position: absolute; list-style: none; display: block;
-            width: 20px; height: 20px; background-color: rgba(255, 105, 180, 0.4);
-            bottom: -150px; animation: animate 20s linear infinite;
-            border-radius: 50%;
-        }
-        .heart:nth-child(1) { left: 25%; width: 40px; height: 40px; animation-delay: 0s; }
-        .heart:nth-child(2) { left: 10%; width: 20px; height: 20px; animation-delay: 2s; animation-duration: 12s; }
-        .heart:nth-child(3) { left: 70%; width: 60px; height: 60px; animation-delay: 4s; }
-        .heart:nth-child(4) { left: 40%; width: 30px; height: 30px; animation-delay: 0s; animation-duration: 18s; }
-        .heart:nth-child(5) { left: 65%; width: 20px; height: 20px; animation-delay: 0s; }
-        .heart:nth-child(6) { left: 85%; width: 50px; height: 50px; animation-delay: 3s; }
-
-        @keyframes animate {
-            0% { transform: translateY(0) rotate(0deg); opacity: 1; }
-            100% { transform: translateY(-1000px) rotate(720deg); opacity: 0; }
+        /* Animasi Bintang Jatuh */
+        .stars {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
         }
 
-        /* --- KONTEN UTAMA --- */
-        .container { position: relative; z-index: 1; text-align: center; width: 90%; max-width: 400px; }
-        
-        .card {
-            background-color: white; padding: 35px; border-radius: 25px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-            display: none; animation: fadeIn 0.8s ease;
-        }
-        .active { display: block; }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
+        /* Container Utama */
+        .container {
+            text-align: center;
+            z-index: 10;
+            width: 90%;
+            max-width: 400px;
         }
 
-        h1 { font-family: 'Dancing Script', cursive; color: #ff4757; font-size: 32px; margin-top: 0; }
-        p { color: #555; font-size: 16px; line-height: 1.6; }
-        .highlight { color: #ff6b6b; font-weight: bold; }
-
-        /* --- TOMBOL --- */
-        .btn {
-            background-color: #ff4757; color: white; border: none;
-            padding: 15px 25px; font-size: 16px; font-weight: bold;
-            border-radius: 30px; cursor: pointer; transition: 0.3s;
-            margin-top: 15px; box-shadow: 0 5px 15px rgba(255, 71, 87, 0.3);
+        /* Amplop / Kado */
+        .envelope-wrapper {
+            cursor: pointer;
+            transition: transform 0.3s ease;
         }
-        .btn:hover { transform: scale(1.05); }
-        
-        #btn-no { position: absolute; background-color: #999; transition: 0.2s ease; }
+
+        .envelope-wrapper:active {
+            transform: scale(0.95);
+        }
+
+        .icon-gift {
+            font-size: 80px;
+            filter: drop-shadow(0 0 20px rgba(255,105,180,0.5));
+            animation: bounce 2s infinite;
+        }
+
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% {transform: translateY(0);}
+            40% {transform: translateY(-20px);}
+            60% {transform: translateY(-10px);}
+        }
+
+        /* Tampilan Pesan (Hidden di awal) */
+        #messageCard {
+            display: none;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(15px);
+            border-radius: 25px;
+            padding: 30px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+            animation: slideUp 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(100px) scale(0.8); }
+            to { opacity: 1; transform: translateY(0) scale(1); }
+        }
+
+        h1 {
+            font-family: 'Dancing Script', cursive;
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            color: #ff9a9e;
+        }
+
+        p {
+            font-size: 1.1rem;
+            line-height: 1.6;
+            color: #f3f3f3;
+        }
+
+        .highlight {
+            color: #fad0c4;
+            font-weight: 600;
+            border-bottom: 2px dashed #ff9a9e;
+        }
+
+        .btn-close {
+            margin-top: 20px;
+            background: #ff9a9e;
+            border: none;
+            padding: 10px 25px;
+            border-radius: 20px;
+            color: white;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        /* Text Bantuan */
+        .hint {
+            margin-top: 20px;
+            font-size: 0.9rem;
+            color: rgba(255,255,255,0.6);
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
     </style>
 </head>
 <body>
 
-    <audio id="mySong" loop>
-        <source src="https://www.mboxdrive.com/Green%20Day%20-%20Last%20Night%20On%20Earth.mp3" type="audio/mpeg">
-    </audio>
-
-    <ul class="hearts">
-        <li class="heart"></li><li class="heart"></li><li class="heart"></li>
-        <li class="heart"></li><li class="heart"></li><li class="heart"></li>
-    </ul>
+    <div class="stars" id="starField"></div>
 
     <div class="container">
-        <div id="p1" class="card active">
-            <h1>Ehem... ✨</h1>
-            <p>Ada sesuatu yang mau aku kasih tau ke kamu, tapi lewat paket digital ini.</p>
-            <p>Dengerin lagunya ya?</p>
-            <button class="btn" onclick="startApp()">Buka Paket 🎁</button>
+        <div id="closedState" class="envelope-wrapper" onclick="openMessage()">
+            <div class="icon-gift">🎁</div>
+            <h2 style="margin-top: 20px;">Satu paket buat kamu...</h2>
+            <div class="hint">Tap untuk buka</div>
         </div>
 
-        <div id="p2" class="card">
-            <h1>Happy Birthday! 🎉</h1>
-            <p>Maaf banget ya aku <span class="highlight">telat banget</span> ngucapinnya.</p>
-            <p>Sengaja sih, biar jadi yang terakhir yang kamu inget di hari ini... eh, maksudnya biar spesial! 😜</p>
-            <p>Semoga kita tetep begini terus ya, makin akrab dan makin sering jalan bareng.</p>
-            <button class="btn" onclick="nextPage(3)">Lanjut</button>
-        </div>
-
-        <div id="p3" class="card">
-            <h1>Satu Pertanyaan...</h1>
-            <p>Karena aku telat, kamu mau kan maafin aku dan kita jalan bareng minggu ini?</p>
-            <div style="height: 100px; position: relative; margin-top: 20px;">
-                <button class="btn" style="position: static;" onclick="finish()">MAU BANGET!</button>
-                <button id="btn-no" class="btn" onmouseover="moveBtn()" onclick="moveBtn()">NGGAK</button>
-            </div>
+        <div id="messageCard">
+            <h1>HBD, Kamu! ✨</h1>
+            <p>Iya, aku tau aku <span class="highlight">telat banget</span>.</p>
+            <p>Tapi katanya, hal-hal baik itu butuh waktu, kan? Sama kayak ucapan ini yang nunggu momen paling tenang buat muncul di HP kamu.</p>
+            <p>Semoga di usia baru ini, bahagianya nggak habis-habis. Dan semoga... kita tetap jadi <span class="highlight">"kita"</span> yang begini terus ya? Hehe.</p>
+            <p style="font-size: 0.9rem; font-style: italic; opacity: 0.8;">— Dari teman yang diam-diam sayang.</p>
+            <button class="btn-close" onclick="location.reload()">Lihat lagi?</button>
         </div>
     </div>
 
     <script>
-        const song = document.getElementById('mySong');
+        // Membuat bintang-bintang di background secara acak
+        const starField = document.getElementById('starField');
+        const count = 50;
 
-        function startApp() {
-            song.play();
-            nextPage(2);
+        for (let i = 0; i < count; i++) {
+            const star = document.createElement('div');
+            star.style.position = 'absolute';
+            star.style.width = '2px';
+            star.style.height = '2px';
+            star.style.background = 'white';
+            star.style.borderRadius = '50%';
+            star.style.top = Math.random() * 100 + '%';
+            star.style.left = Math.random() * 100 + '%';
+            star.style.opacity = Math.random();
+            star.style.animation = `twinkle ${Math.random() * 3 + 2}s infinite`;
+            starField.appendChild(star);
         }
 
-        function nextPage(n) {
-            document.querySelectorAll('.card').forEach(c => c.classList.remove('active'));
-            document.getElementById('p' + n).classList.add('active');
-        }
-
-        function moveBtn() {
-            const btn = document.getElementById('btn-no');
-            // Menghitung batas layar agar tombol tidak lari ke luar layar HP
-            const x = Math.random() * (window.innerWidth - 100);
-            const y = Math.random() * (window.innerHeight - 50);
-            btn.style.left = x + 'px';
-            btn.style.top = y + 'px';
-            btn.style.position = 'fixed';
-        }
-
-        function finish() {
-            alert('Ciyeee dimaafin! ❤️ Chat aku sekarang ya!');
-            window.location.href = "https://wa.me/628123456789?text=Iya%20aku%20maafin!%20Kapan%20kita%20jalan?%20😜";
+        function openMessage() {
+            document.getElementById('closedState').style.display = 'none';
+            document.getElementById('messageCard').style.display = 'block';
+            
+            // Trigger vibrasi di HP kalau didukung
+            if ("vibrate" in navigator) {
+                navigator.vibrate(100);
+            }
         }
     </script>
 
+    <style>
+        @keyframes twinkle {
+            0%, 100% { opacity: 0.3; }
+            50% { opacity: 1; }
+        }
+    </style>
 </body>
 </html>
