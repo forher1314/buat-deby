@@ -2,115 +2,80 @@
 <html lang="id">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Special For You</title>
-    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;700&family=Dancing+Script:wght@700&display=swap" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kado Spesial Untukmu</title>
     <style>
-        * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
         body {
-            margin: 0; padding: 0; height: 100vh;
-            font-family: 'Quicksand', sans-serif;
-            background: linear-gradient(135deg, #ffafbd 0%, #ffc3a0 100%);
-            overflow: hidden; display: flex; justify-content: center; align-items: center;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #fae1dd;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
         }
-
-        /* Hujan Hati Multi-Variasi */
-        .heart {
-            position: absolute; top: -50px;
-            animation: fall linear forwards;
-            user-select: none; pointer-events: none; z-index: 1;
-        }
-        @keyframes fall { to { transform: translateY(110vh) rotate(360deg); } }
-
-        /* Container & Card */
-        .page {
-            display: none; position: relative; z-index: 10;
-            width: 90%; max-width: 400px; text-align: center;
-            animation: fadeIn 0.8s ease;
-        }
-        .active { display: block; }
-        @keyframes fadeIn { from { opacity: 0; transform: scale(0.9); } to { opacity: 1; transform: scale(1); } }
 
         .card {
-            background: rgba(255, 255, 255, 0.25);
-            backdrop-filter: blur(15px);
-            -webkit-backdrop-filter: blur(15px);
-            border: 1px solid rgba(255, 255, 255, 0.3);
-            padding: 30px; border-radius: 25px;
-            box-shadow: 0 15px 35px rgba(0,0,0,0.1);
+            position: relative;
+            width: 300px;
+            height: 400px;
+            background-color: #f08080;
+            border-radius: 10px;
+            cursor: pointer;
+            transform-style: preserve-3d;
+            transition: transform 0.8s;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
         }
 
-        h1 { font-family: 'Dancing Script', cursive; font-size: 2.8rem; color: #d63384; margin: 10px 0; }
-        p { font-size: 1.1rem; color: #555; line-height: 1.6; }
-
-        /* Tombol */
-        .btn {
-            background: #d63384; color: white; border: none;
-            padding: 15px 30px; border-radius: 30px;
-            font-weight: bold; font-size: 1rem; cursor: pointer;
-            margin-top: 20px; box-shadow: 0 5px 15px rgba(214, 51, 132, 0.3);
-            transition: 0.3s;
+        .card:hover {
+            transform: rotateY(180deg);
         }
-        .btn-yes { background: #28a745; }
-        .btn-no { background: #888; position: absolute; transition: 0.2s ease; }
 
-        .gift { font-size: 80px; cursor: pointer; animation: shake 2s infinite; display: inline-block; }
-        @keyframes shake {
-            0%, 100% { transform: rotate(0); }
-            10%, 30%, 50% { transform: rotate(-10deg) scale(1.1); }
-            20%, 40%, 60% { transform: rotate(10deg) scale(1.1); }
+        .card-front, .card-back {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            backface-visibility: hidden;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            border-radius: 10px;
+            padding: 20px;
+            box-sizing: border-box;
+            text-align: center;
         }
+
+        .card-front {
+            background-color: #ff9999;
+            color: white;
+        }
+
+        .card-back {
+            background-color: white;
+            color: #333;
+            transform: rotateY(180deg);
+        }
+
+        h1 { margin: 0; font-size: 24px; }
+        p { font-size: 16px; line-height: 1.5; }
+        .heart { color: #e63946; font-size: 50px; }
     </style>
 </head>
 <body>
 
-    <audio id="lagu" loop>
-        <source src="https://www.mboxdrive.com/Green%20Day%20-%20Last%20Night%20On%20Earth.mp3" type="audio/mpeg">
-    </audio>
-
-    <div id="p1" class="page active">
-        <div class="gift" onclick="bukaKado()">🎁</div>
-        <h2 style="color: #d63384;">Ada sesuatu buat kamu!</h2>
-        <p>Sentuh kadonya ya...</p>
-    </div>
-
-    <div id="p2" class="page">
-        <div class="card">
-            <h1>Special for You</h1>
-            <p>I know, I know... aku telat banget ya? 🙈</p>
-            <p>Tapi dengerin lagu ini deh, liriknya mewakili apa yang mau aku sampein ke kamu hari ini.</p>
-            <p>Happy Birthday (telat) buat orang yang paling bikin nyaman!</p>
-            <button class="btn" onclick="nextPage(3)">Lanjut</button>
+    <div class="card">
+        <div class="card-front">
+            <div class="heart">❤️</div>
+            <h1>Klik & Intip!</h1>
+            <p>Ada sesuatu untukmu...</p>
+        </div>
+        <div class="card-back">
+            <h1>Selamat! 🎉</h1>
+            <p>Semoga hari-harimu selalu menyenangkan dan penuh inspirasi. Terima kasih sudah menjadi orang yang luar biasa!</p>
+            <p><strong>- Dari Teman Kodingmu -</strong></p>
         </div>
     </div>
 
-    <div id="p3" class="page">
-        <div class="card">
-            <h1>Last Question...</h1>
-            <p>Meskipun aku telat, kita masih tetep "kita" kan? Dan kamu mau kan aku ajak jalan sebagai permintaan maaf?</p>
-            <div style="height: 120px; position: relative; margin-top: 20px;">
-                <button class="btn btn-yes" onclick="finish()">MAU!</button>
-                <button id="btnNo" class="btn btn-no" onmouseover="lari()" onclick="lari()">NGGAK</button>
-            </div>
-        </div>
-    </div>
-
-    <script>
-        // Hujan Hati
-        function createHeart() {
-            const emojis = ['❤️', '💖', '💕', '💗', '💓', '✨'];
-            const h = document.createElement('div');
-            h.classList.add('heart');
-            h.innerText = emojis[Math.floor(Math.random() * emojis.length)];
-            h.style.left = Math.random() * 100 + 'vw';
-            h.style.fontSize = Math.random() * 20 + 15 + 'px';
-            h.style.animationDuration = Math.random() * 3 + 2 + 's';
-            h.style.opacity = Math.random();
-            document.body.appendChild(h);
-            setTimeout(() => h.remove(), 5000);
-        }
-        setInterval(createHeart, 300);
-
-        // Navigasi
-        function bukaKado() {
-            document.getElementById
+</body>
+</html>
