@@ -3,79 +3,238 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Kado Spesial Untukmu</title>
+    <title>Sesuatu Buat Kamu</title>
     <style>
-        body {
+        /* --- CSS DASAR --- */
+        body, html {
+            height: 100%;
+            margin: 0;
+            font-family: 'Poppins', sans-serif; /* Pastikan pake font yang estetik */
+            overflow: hidden; /* Biar partikel gak bikin scrollbar */
+            background: linear-gradient(135deg, #fed0da 0%, #a3d9f9 100%); /* Gradasi pink-biru lembut */
             display: flex;
             justify-content: center;
             align-items: center;
-            height: 100vh;
-            background-color: #fae1dd;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            margin: 0;
         }
 
-        .card {
-            position: relative;
-            width: 300px;
-            height: 400px;
-            background-color: #f08080;
-            border-radius: 10px;
-            cursor: pointer;
-            transform-style: preserve-3d;
-            transition: transform 0.8s;
-            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
-        }
-
-        .card:hover {
-            transform: rotateY(180deg);
-        }
-
-        .card-front, .card-back {
+        /* --- ANIMASI PARTIKEL (Latar Belakang) --- */
+        .hearts {
             position: absolute;
             width: 100%;
             height: 100%;
-            backface-visibility: hidden;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            border-radius: 10px;
-            padding: 20px;
-            box-sizing: border-box;
+            top: 0;
+            left: 0;
+            z-index: 0;
+        }
+
+        .heart {
+            position: absolute;
+            list-style: none;
+            display: block;
+            width: 20px;
+            height: 20px;
+            background-color: rgba(255, 105, 180, 0.3);
+            bottom: -150px;
+            animation: animate 25s linear infinite;
+            border-radius: 50%;
+        }
+
+        /* Variasi ukuran dan posisi partikel */
+        .heart:nth-child(1) { left: 25%; width: 80px; height: 80px; animation-delay: 0s; }
+        .heart:nth-child(2) { left: 10%; width: 20px; height: 20px; animation-delay: 2s; animation-duration: 12s; }
+        .heart:nth-child(3) { left: 70%; width: 20px; height: 20px; animation-delay: 4s; }
+        .heart:nth-child(4) { left: 40%; width: 60px; height: 60px; animation-delay: 0s; animation-duration: 18s; }
+        .heart:nth-child(5) { left: 65%; width: 20px; height: 20px; animation-delay: 0s; }
+        .heart:nth-child(6) { left: 75%; width: 110px; height: 110px; animation-delay: 3s; }
+        .heart:nth-child(7) { left: 35%; width: 150px; height: 150px; animation-delay: 7s; }
+        .heart:nth-child(8) { left: 50%; width: 25px; height: 25px; animation-delay: 15s; animation-duration: 45s; }
+        .heart:nth-child(9) { left: 20%; width: 15px; height: 15px; animation-delay: 2s; animation-duration: 35s; }
+        .heart:nth-child(10) { left: 85%; width: 150px; height: 150px; animation-delay: 0s; animation-duration: 11s; }
+
+        @keyframes animate {
+            0% { transform: translateY(0) rotate(0deg); opacity: 1; border-radius: 0; }
+            100% { transform: translateY(-1000px) rotate(720deg); opacity: 0; border-radius: 50%; }
+        }
+
+        /* --- KONTEN UTAMA --- */
+        .container {
+            position: relative;
+            z-index: 1; /* Di atas partikel */
             text-align: center;
         }
 
-        .card-front {
-            background-color: #ff9999;
-            color: white;
+        /* --- DESAIN KADO (Sebelum Dibuka) --- */
+        .gift-box {
+            width: 200px;
+            height: 200px;
+            background-color: #ff6b6b;
+            position: relative;
+            cursor: pointer;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            transition: transform 0.5s ease;
+            margin: 0 auto 30px; /* Center & margin bottom */
         }
 
-        .card-back {
+        .gift-box:hover {
+            transform: scale(1.05) rotate(-5deg);
+        }
+
+        /* Pita kado */
+        .gift-box::before {
+            content: '';
+            position: absolute;
+            width: 30px;
+            height: 100%;
+            background-color: #fff;
+            left: 50%;
+            transform: translateX(-50%);
+            border-radius: 5px;
+        }
+
+        .gift-box::after {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 30px;
+            background-color: #fff;
+            top: 50%;
+            transform: translateY(-50%);
+            border-radius: 5px;
+        }
+
+        /* Tutup Kado */
+        .gift-lid {
+            width: 220px;
+            height: 50px;
+            background-color: #ff4757;
+            position: absolute;
+            top: -10px;
+            left: -10px;
+            border-radius: 10px;
+            z-index: 2;
+            transition: transform 1s ease, opacity 0.5s ease;
+        }
+
+        /* Pita atas */
+        .lid-ribbon {
+            width: 60px;
+            height: 60px;
+            border: 15px solid #fff;
+            border-radius: 50%;
+            position: absolute;
+            top: -35px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 1;
+        }
+
+        /* --- KONTEN UCAPAN (Tersembunyi Awal) --- */
+        .wishes {
             background-color: white;
-            color: #333;
-            transform: rotateY(180deg);
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            max-width: 400px;
+            opacity: 0;
+            transform: translateY(50px);
+            transition: all 1s ease;
+            display: none; /* Sembunyikan total di awal */
         }
 
-        h1 { margin: 0; font-size: 24px; }
-        p { font-size: 16px; line-height: 1.5; }
-        .heart { color: #e63946; font-size: 50px; }
+        h1 { color: #ff4757; font-size: 28px; margin-top: 0; }
+        p { color: #555; font-size: 16px; line-height: 1.6; margin-bottom: 10px; }
+        .signature { font-weight: bold; color: #777; margin-top: 20px; display: block; }
+        .highlight { color: #ff6b6b; font-weight: bold; }
+
+        /* --- STATE: KETIKA KADO DIBUKA (Triggered by JS) --- */
+        .container.open .gift-box {
+            display: none; /* Sembunyikan kotak kado */
+        }
+
+        .container.open .wishes {
+            display: block; /* Tampilkan ucapan */
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* --- TOMBOL --- */
+        .open-btn {
+            background-color: #fff;
+            color: #ff4757;
+            border: none;
+            padding: 15px 30px;
+            font-size: 18px;
+            font-weight: bold;
+            border-radius: 30px;
+            cursor: pointer;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+            position: relative;
+            z-index: 3;
+        }
+
+        .open-btn:hover {
+            background-color: #ff4757;
+            color: white;
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+        }
+
     </style>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
 </head>
 <body>
 
-    <div class="card">
-        <div class="card-front">
-            <div class="heart">❤️</div>
-            <h1>Klik & Intip!</h1>
-            <p>Ada sesuatu untukmu...</p>
+    <ul class="hearts">
+        <li class="heart"></li>
+        <li class="heart"></li>
+        <li class="heart"></li>
+        <li class="heart"></li>
+        <li class="heart"></li>
+        <li class="heart"></li>
+        <li class="heart"></li>
+        <li class="heart"></li>
+        <li class="heart"></li>
+        <li class="heart"></li>
+    </ul>
+
+    <div class="container" id="mainContainer">
+        
+        <div class="gift-area" id="giftArea">
+            <div class="gift-box">
+                <div class="gift-lid">
+                    <div class="lid-ribbon"></div>
+                </div>
+            </div>
+            <h1>Ehem... Ada Paket!</h1>
+            <p>Telat sih, tapi katanya yang terakhir itu yang paling spesial...</p>
+            <button class="open-btn" onclick="openGift()">Buka Dong 🎁</button>
         </div>
-        <div class="card-back">
-            <h1>Selamat! 🎉</h1>
-            <p>Semoga hari-harimu selalu menyenangkan dan penuh inspirasi. Terima kasih sudah menjadi orang yang luar biasa!</p>
-            <p><strong>- Dari Teman Kodingmu -</strong></p>
+
+        <div class="wishes" id="wishesArea">
+            <h1>Ciyeee... 🎉</h1>
+            <p>Ada yang baru ulang tahun ya? 🤔</p>
+            <p><span class="highlight">HBD ya!</span> Maaf banget aku telat ngucapin (sengaja sih, biar jadi yang terakhir di hati kamu... eh gimana? 😜).</p>
+            <p>Semoga tahun ini kamu makin bahagia, makin sukses, dan... makin sering 'kita' jalan bareng. Sehat terus ya, <span class="highlight">you</span>!</p>
+            <span class="signature">- Dari aku, fans rahasiamu -</span>
         </div>
+
     </div>
+
+    <script>
+        function openGift() {
+            // Ambil elemen container utama
+            const container = document.getElementById('mainContainer');
+            
+            // Tambahkan class 'open' untuk memicu animasi CSS
+            container.classList.add('open');
+            
+            // Opsional: Tambahkan suara kado terbuka (jika ada file suaranya)
+            // let audio = new Audio('open_gift.mp3');
+            // audio.play();
+        }
+    </script>
 
 </body>
 </html>
